@@ -46,20 +46,24 @@ class Scraper:
         list_publication_share = []
         list_fwci = []
         list_prominence_percentile = []
+        list_info = []
         for data in data_list:
             list_topic_cluster_name.append(data.cluster_name)
             list_topic_cluster_id.append(data.cluster_id)
             list_scholarly_output.append(data.scholarly_output)
-            list_publication_share.append(data.publication_share)
+            publications_share_value, info = data.publication_share.split()
+            list_publication_share.append(publications_share_value)
+            list_info.append(info)
             list_fwci.append(data.fwci)
             list_prominence_percentile.append(data.prominence_percentile)
         return pd.DataFrame({
-            "Cluster Name": list_topic_cluster_name,
-            "Cluster Id": list_topic_cluster_id,
+            "Topic Cluster": list_topic_cluster_name,
+            "Topic Cluster Number": list_topic_cluster_id,
             "Scholarly Output": list_scholarly_output,
-            "Publication Share": list_publication_share,
-            "FWCI": list_fwci,
-            "Prominence Percentile": list_prominence_percentile
+            "Publication share (%)": list_publication_share,
+            "Publication Share growth (%)": list_info,
+            "Field-Weighted Citation Impact": list_fwci,
+            "Prominence percentile": list_prominence_percentile
         })
 
     def start(self) -> DataFrame:
